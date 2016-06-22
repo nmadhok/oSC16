@@ -1,14 +1,17 @@
 ### Using majority of VMware cloud-driver's functionality:
 
 1. Install `salt-cloud` packages:
+
     ```sh
     yum install -y salt-cloud
     ```
 2. Install `pyVmomi`:
+
     ```sh
     pip install pyVmomi==5.5.0-2014.1.1
     ```
 3. Configure `/etc/salt/cloud.providers.d/vmware.conf`:
+
     ```yaml
     vcenter01:
       driver: vmware
@@ -20,6 +23,7 @@
     ```
      [`vmware-sdb_setup.sh`](https://raw.githubusercontent.com/nmadhok/osc16/master/SAMPLES/vmware-sdb_setup.sh) script can also be used to configure the VMware cloud driver.
 4. Test connection using VMware cloud driver:
+
    ```sh
     salt-cloud -f test_vcenter_connection vcenter01
    ```
@@ -76,6 +80,7 @@ salt-cloud -f add_host vcenter01 host="host.domain.com" datacenter="Test-Datacen
 
 ### Creating VMs/templates:
 1. Create profile `/etc/salt/cloud.profiles.d/profiles.conf`:
+
     ```yaml
     distro-vcenter01:
       provider: vcenter01
@@ -109,14 +114,17 @@ salt-cloud -f add_host vcenter01 host="host.domain.com" datacenter="Test-Datacen
     * `password`: Specify the password to use to ssh to the VM.
     * `minion`: Specify the minion configuration for the VM.
 2. Use bootstrap script from develop branch:
+
     ```sh
     salt-cloud --update-bootstrap
     ```
 3. Create VMs using profile:
+
     ```sh
     salt-cloud -p distro-vcenter01 testvm1
     ```
 4. Create map file ``/etc/salt/cloud.maps.d/test.map``:
+
     ```yaml
     distro-vcenter01:
       - testvm1:
@@ -130,6 +138,7 @@ salt-cloud -f add_host vcenter01 host="host.domain.com" datacenter="Test-Datacen
           memory: 4GB
     ```
 5. Create VMs using map file:
+
     ```sh
     salt-cloud -P -m /etc/salt/cloud.maps.d/test.map
     ```
